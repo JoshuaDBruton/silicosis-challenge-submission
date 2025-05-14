@@ -1,0 +1,45 @@
+LABEL_DESCRIPTIONS:
+  # Ordinal Profusion Scores (3 classes)
+  ORDINAL_PROFUSION:
+    - "There is at least minimal parenchymal abnormality suggestive of pneumoconiosis."
+    - "There is moderate profusion of small opacities, indicating more frequent involvement."
+    - "There is advanced parenchymal involvement with confluent opacities."
+
+  # Tuberculosis Binary Classification (2 classes)
+  BINARY_TUBERCULOSIS:
+    - "This X-ray does not present Tuberculosis"
+    - "This X-ray contains signs of Tuberculosis"
+
+  # Silicosis Binary Classification (2 classes)
+  BINARY_SILICOSIS:
+    - "No sign of silicosis, pneumoconiosis negative"
+    - "Signs of silicosis, pneumoconiosis positive"
+
+  # Label Set 1
+  LABEL_SET_1:
+    - "The lung fields are clear with no evidence of small rounded opacities."
+    - "There are a few small, rounded opacities visible in the upper lung zones, but these are sparse and do not obscure vascular markings."
+    - "Numerous small, rounded opacities are present throughout the upper and mid lung zones, with partial obscuration of normal vascular markings."
+    - "The lung fields demonstrate a high density of small, rounded opacities, with marked obscuration of normal lung markings."
+
+  # Label Set 2
+  LABEL_SET_2:
+    - "There is no radiographic indication of parenchymal abnormality suggestive of pneumoconiosis."
+    - "The distribution of opacities is limited, with minimal involvement of the lung parenchyma."
+    - "The opacities are more frequent and evenly distributed, indicating moderate profusion consistent with pneumoconiosis."
+    - "The opacities are confluent in some areas, and there is clear evidence of advanced parenchymal involvement."
+
+  # Label Set 3
+  LABEL_SET_3:
+    - "The pulmonary architecture is preserved, and no interstitial changes are identified."
+    - "No significant distortion of lung architecture is observed, and there is no evidence of coalescence."
+    - "There is mild distortion of the lung parenchyma, but no large opacities or significant fibrosis are seen."
+    - "Architectural distortion is present, and early signs of progressive massive fibrosis may be considered."
+
+  # Numeric Labels (4 classes)
+  NUMERIC:
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+

@@ -1,0 +1,4 @@
+# Config for Silicosis "checkpoints4" batch 5
+model: # Settings for verify and visualise
+  hdf5_file: "mbod_dataset_merged_1792_filtered.h5"
+  label_scheme: "profusion_score" # Label key to use (tuberculosis, silicosis, lab, etc.)
