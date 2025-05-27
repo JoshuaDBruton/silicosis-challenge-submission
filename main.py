@@ -1,5 +1,7 @@
 import yaml
 import json
+import numpy as np
+from tqdm import tqdm
 from dataset.dataset import DicomDataset
 from open_clip import get_tokenizer
 from open_clip.factory import HF_HUB_PREFIX, _MODEL_CONFIGS
@@ -9,7 +11,6 @@ import os
 
 
 def main():
-    # Load Silicosis Model
     model_name = "biomedclip_local"
 
     with open("checkpoints/open_clip_config.json", "r") as f:
@@ -26,20 +27,30 @@ def main():
 
     model, preprocess = create_combined_model(tokenizer, model_name, pretrained_path="checkpoints/open_clip_pytorch_model.bin", image_size=1792, use_qformer=True, use_swin=True)
     model.load_state_dict(torch.load(os.path.join("checkpoints", "chosen-checkpoints4.pth")))
+    model.eval()
 
-    # Load Dataset
     dataset = DicomDataset(imgpath="/media/joshua/Data/Silicosis Dataset/anonymised_silicosis_training_images-sep-25")
 
     with open("config.yaml", "r") as f:
         config = yaml.safe_load(f)
 
-    label_descriptions = config["LABEL_DESCRIPTIONS"]["LABEL_SET_2"]
+    silicosis_label_descriptions = config["LABEL_DESCRIPTIONS"]["LABEL_SET_2"]
+    tuberculosis_label_descriptions = config["LABEL_DESCRIPTIONS"]["BINARY_TUBERCULOSIS"]
 
-    # Inference Silicosis
-    for image in dataset:
-        print(image.shape)
-        logits = model.forward(image, label_descriptions)
-        print(logits)
+    silicosis_logits = []
+    for image in tqdm(dataset):
+        silicosis_logit = model.forward(image, silicosis_label_descriptions)
+        silicosis_logit = silicosis_logit.detach().cpu().numpy()
+        silicosis_logits.append(silicosis_logit)
+
+    model.load_state_dict(torch.load(os.path.join("checkpoints", "chosen-results3-126-0.pth")))
+    model.eval()
+
+    tuberculosis_logits = []
+    for image in tqdm(dataset):
+        tuberculosis_logit = model.forward(image, tuberculosis_label_descriptions)
+        tuberculosis_logit = tuberculosis_logit.detach().cpu().numpy()
+        tuberculosis_logits.append(tuberculosis_logit)
 
 
 if __name__ == "__main__":
