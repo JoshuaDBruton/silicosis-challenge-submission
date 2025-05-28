@@ -9,6 +9,7 @@ from models import create_combined_model
 import torch
 import os
 import csv
+import argparse
 
 
 def softmax(x):
@@ -17,6 +18,17 @@ def softmax(x):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Run Silicosis and TB inference on a DICOM dataset."
+    )
+    parser.add_argument(
+        "--imgpath",
+        type=str,
+        required=True,
+        help="Path to the directory containing DICOM images."
+    )
+    args = parser.parse_args()
+
     model_name = "biomedclip_local"
 
     with open("checkpoints/open_clip_config.json", "r") as f:
@@ -47,7 +59,7 @@ def main():
     model.eval()
 
     dataset = DicomDataset(
-        imgpath="/media/joshua/Data/Silicosis Dataset/anonymised_silicosis_training_images-sep-25"
+        imgpath=args.imgpath
     )
 
     with open("config.yaml", "r") as f:
@@ -88,7 +100,11 @@ def main():
             tb_logit = tuberculosis_logits[idx]
 
             silico_probs = softmax(silico_logit)
-            silico_conf = silico_probs[-2:].sum()
+            silico_argmax = np.argmax(silico_probs)
+            if silico_argmax == 0:
+                silico_conf = silico_probs[-2:].sum()
+            else:
+                silico_conf = silico_probs[-3:].sum()
 
             tb_probs = softmax(tb_logit)
             tb_conf = tb_probs[1]  # index 1 is "positive" class
