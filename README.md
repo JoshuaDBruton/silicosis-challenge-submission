@@ -1,7 +1,3 @@
-Certainly! Here’s a concise and clear `README.md` for your **Silicosis Challenge Submission**:
-
----
-
 # Silicosis Challenge Submission
 
 This repository contains the code for the Silicosis Challenge submission.  
