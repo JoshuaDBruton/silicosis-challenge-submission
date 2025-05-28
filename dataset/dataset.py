@@ -68,5 +68,5 @@ class DicomDataset():
 
         sample = sample.unsqueeze(0)
 
-        return sample
+        return sample, image_name
 
