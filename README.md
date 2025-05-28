@@ -37,5 +37,3 @@ bash run.sh "/media/home/data/dicoms/"
 - The virtual environment and all dependencies will be set up automatically by `installer.sh`.
 
 ---
-
-Let me know if you want to add more details or sections!
