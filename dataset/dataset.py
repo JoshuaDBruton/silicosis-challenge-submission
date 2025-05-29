@@ -22,7 +22,7 @@ class DicomDataset():
         self.image_names = []
         for root, dirs, files in os.walk(imgpath):
             for file in files:
-                if file.endswith('.dcm'):
+                if file.lower().endswith('.dcm') or file.lower().endswith('.dicom'):
                     self.image_names.append(file)
 
     def __str__(self):
